@@ -499,11 +499,11 @@ def text(update, context):
 def main():
     TOKEN = "6279315002:AAEPVVpIORsI2642mc10bMsm_nKkDaMnI_0"
 
-    persistence = PicklePersistence(filename='../conversationbot')
+    persistence = PicklePersistence(filepath="conversationbot")
 
     # create the updater, that will automatically create also a dispatcher and a queue to 
     # make them dialoge
-    updater = Updater(TOKEN, use_context=True, persistence=persistence, workers=32)
+    updater = Updater(TOKEN)
     dispatcher = updater.dispatcher
 
     # add handlers for start and help commands
