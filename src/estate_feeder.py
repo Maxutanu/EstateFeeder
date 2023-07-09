@@ -1,18 +1,12 @@
 # mastrobot_example.py
-from telegram.bot import Bot
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, PicklePersistence, CallbackQueryHandler
-from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, replymarkup, Bot
+from telegram.ext import Updater, CommandHandler, MessageHandler, filters, ConversationHandler, PicklePersistence, CallbackQueryHandler
+from telegram import ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup
 import telegram
 import logging
 from typing import Dict
 import requests
-from bs4 import BeautifulSoup
-import re
 import json
-import time
-import emoji
 import immobiliare_scraper
-import config
 
 
 TYPE = 1
@@ -503,7 +497,7 @@ def text(update, context):
     
 
 def main():
-    TOKEN = config.token
+    TOKEN = "6279315002:AAEPVVpIORsI2642mc10bMsm_nKkDaMnI_0"
 
     persistence = PicklePersistence(filename='../conversationbot')
 
@@ -528,27 +522,27 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states = {
-            TYPE: [MessageHandler(Filters.text, text)],
+            TYPE: [MessageHandler(filters.text, text)],
             QUERY_CITY: [
-                MessageHandler(Filters.text, text),
+                MessageHandler(filters.text, text),
                 CallbackQueryHandler(set_city, pattern=r'^set_city$')
                 ],
-            QUERY_NEIGHBOURHOOD: [MessageHandler(Filters.text, text)],
-            MACROZONE: [MessageHandler(Filters.text, text)],
-            MIN_PRICE: [MessageHandler(Filters.text, text)],
-            MAX_PRICE: [MessageHandler(Filters.text, text)],
-            MIN_SURFACE: [MessageHandler(Filters.text, text)],
-            MAX_SURFACE: [MessageHandler(Filters.text, text)],
-            END: [MessageHandler(Filters.text, text)],
-            RESULTS: [MessageHandler(Filters.text, text)]
+            QUERY_NEIGHBOURHOOD: [MessageHandler(filters.text, text)],
+            MACROZONE: [MessageHandler(filters.text, text)],
+            MIN_PRICE: [MessageHandler(filters.text, text)],
+            MAX_PRICE: [MessageHandler(filters.text, text)],
+            MIN_SURFACE: [MessageHandler(filters.text, text)],
+            MAX_SURFACE: [MessageHandler(filters.text, text)],
+            END: [MessageHandler(filters.text, text)],
+            RESULTS: [MessageHandler(filters.text, text)]
         },
-        fallbacks=[MessageHandler(Filters.text, text)],
+        fallbacks=[MessageHandler(filters.text, text)],
         name="my_conversation",
         persistent=True,
     )
 
     # add an handler for normal text (not commands)
-    dispatcher.add_handler(MessageHandler(Filters.text, text))
+    dispatcher.add_handler(MessageHandler(filters.text, text))
 
     # add an handler for errors
     dispatcher.add_error_handler(error)
